@@ -24,13 +24,7 @@ MansouraResearchHub/
 ```
 backend/
 |
-|-- app/
-|   |-- __init__.py             # Package initialization
-|   |-- main.py                 # FastAPI app and endpoints
-|   |-- services/
-|   |   |-- scraper.py          # Web scraping logic for Google Scholar and Papers With Code
-|   |   |-- summarizer.py       # Summarization logic using Hugging Face Transformers
-|   |   |-- comparator.py       # Logic for generating comparative reviews
+|-- app.py                      # FastAPI app and endpoints                 
 |-- requirements.txt            # Python dependencies
 |-- README.md                   # Backend-specific documentation
 ```
