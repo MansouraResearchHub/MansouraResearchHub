@@ -125,4 +125,3 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 ## Acknowledgments
 - [Google Scholar](https://scholar.google.com) for paper metadata.
 - [Papers With Code](https://paperswithcode.com) for code availability.
-- [Hugging Face](https://huggingface.co) for the summarization model.
