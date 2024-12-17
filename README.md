@@ -1,13 +1,13 @@
-# Mansoura Research Hub
+# Mansoura Research Hub 📑
 
-## Overview
+## 1️⃣ Overview
 This project aims to assist researchers in discovering, reviewing, and comparing recent academic papers based on their topic of interest. The application scrapes data from [`Google Scholar`](https://scholar.google.com/) and [`Papers With Code`](https://paperswithcode.com/) to provide paper details, summaries, code availability, and comparative reviews.
 <p align="center">
  <img width="400" src="https://user-images.githubusercontent.com/91850794/209578154-9e474e32-3cb2-4d09-afc9-402349caab8e.png" alt="Material Bread logo">
  </p>
 
 ----
-## Repository Structure
+## 2️⃣ Repository Structure
 
 ### Root Structure
 ```
@@ -54,7 +54,7 @@ frontend/
 
 ---
 
-## Backend: Python Implementation
+## 3️⃣ Backend: Python Implementation
 ### Features
 - **Paper Search:** Fetches paper metadata (title, authors, summary, link, etc.) from Google Scholar.
 - **Code Availability:** Checks if implementations are available on Papers With Code.
@@ -80,7 +80,7 @@ frontend/
 
 ---
 
-## Frontend: Flutter Implementation
+## 4️⃣ Frontend: Flutter Implementation
 ### Features
 - **User Input:** Accepts topic of interest from users.
 - **Results Display:** Shows a list of papers with metadata, summaries, and code availability.
@@ -103,12 +103,12 @@ frontend/
 
 ---
 
-## Integration
+## 5️⃣ Integration
 The backend and frontend communicate via REST APIs. Ensure the backend server is running and replace the `BASE_URL` in the Flutter app with the backend server's address.
 
 ---
 
-## Contributing
+## 6️⃣ Contributing
 1. Fork the repository.
 2. Create a new branch (`feature/your-feature`).
 3. Commit your changes.
@@ -117,11 +117,11 @@ The backend and frontend communicate via REST APIs. Ensure the backend server is
 
 ---
 
-## License
+## 7️⃣ License
 This project is licensed under the Apache License. See the LICENSE file for more details.
 
 ---
 
-## Acknowledgments
+## 8️⃣ Acknowledgments
 - [Google Scholar](https://scholar.google.com) for paper metadata.
 - [Papers With Code](https://paperswithcode.com) for code availability.
