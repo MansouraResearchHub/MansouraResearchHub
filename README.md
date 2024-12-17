@@ -9,6 +9,17 @@ This project aims to assist researchers in discovering, reviewing, and comparing
 ----
 ## Repository Structure
 
+### Root Structure
+```
+MansouraResearchHub/
+|
+|-- backend/                    # Python backend
+|-- frontend/                   # Flutter frontend
+|-- README.md                   # Project overview
+|-- .gitignore                  # Git ignored files
+|-- LICENSE                     # License file
+```
+
 ### Backend (Python)
 ```
 backend/
@@ -39,17 +50,6 @@ frontend/
 |   |   |-- api_service.dart    # API integration logic
 |-- pubspec.yaml                # Flutter dependencies
 |-- README.md                   # Frontend-specific documentation
-```
-
-### Root Structure
-```
-MansouraResearchHub/
-|
-|-- backend/                    # Python backend
-|-- frontend/                   # Flutter frontend
-|-- README.md                   # Project overview
-|-- .gitignore                  # Git ignored files
-|-- LICENSE                     # License file
 ```
 
 ---
