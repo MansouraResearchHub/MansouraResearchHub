@@ -118,11 +118,10 @@ The backend and frontend communicate via REST APIs. Ensure the backend server is
 ---
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the Apache License. See the LICENSE file for more details.
 
 ---
 
 ## Acknowledgments
 - [Google Scholar](https://scholar.google.com) for paper metadata.
 - [Papers With Code](https://paperswithcode.com) for code availability.
-- [Hugging Face](https://huggingface.co) for the summarization model.
