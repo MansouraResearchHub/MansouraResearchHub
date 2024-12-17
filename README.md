@@ -1,11 +1,13 @@
 # Mansoura Research Hub
 
 ## Overview
-This project aims to assist researchers in discovering, reviewing, and comparing recent academic papers based on their topic of interest. The application scrapes data from Google Scholar and Papers With Code to provide paper details, summaries, code availability, and comparative reviews.
+This project aims to assist researchers in discovering, reviewing, and comparing recent academic papers based on their topic of interest. The application scrapes data from [`Google Scholar`](https://scholar.google.com/) and [`Papers With Code`](https://paperswithcode.com/) to provide paper details, summaries, code availability, and comparative reviews.
+<p align="center">
+ <img width="400" src="https://user-images.githubusercontent.com/91850794/209578154-9e474e32-3cb2-4d09-afc9-402349caab8e.png" alt="Material Bread logo">
+ </p>
 
----
-
-## File Structure
+----
+## Repository Structure
 
 ### Backend (Python)
 ```
