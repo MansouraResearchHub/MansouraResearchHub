@@ -4,25 +4,20 @@ import requests, re
 from bs4 import BeautifulSoup
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-#from transformers import pipeline
-
 app = FastAPI()
 
-# Summarization model using Hugging Face Transformers
-#summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+# Summarization model using LangChain
 summarizer = ChatGoogleGenerativeAI(model="gemini-1.5-flash", api_key="AIzaSyC2YG-msSXWXOxnzaxSlEPnQE4scpNLOAc")
 
 # Base URLs
 GOOGLE_SCHOLAR_URL = "https://scholar.google.com/scholar?q="
 PAPERS_WITH_CODE_URL = "https://paperswithcode.com/search?q="
 
-
 @app.get("/")
 def home():
     return {"message": "Welcome to the Research Paper Assistant API!"}
 
-
-@app.get("/search")
+@app.get("/scholar_search")
 def search_papers(query: str):
     """
     Search Google Scholar for recent papers based on the query.
@@ -46,6 +41,7 @@ def search_papers(query: str):
             papers.append({
                 "title": title,
                 "link": link,
+                "code": "N/A",
                 "summary": summary,
                 "metadata": metadata
             })
@@ -54,7 +50,6 @@ def search_papers(query: str):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
 
 @app.get("/get_code")
 def fetch_code(query: str):
@@ -72,14 +67,18 @@ def fetch_code(query: str):
 
         # Parse results
         for result in soup.select(".paper-card"):
-            title = result.select_one(".paper-title").text.strip() if result.select_one(".paper-title") else "N/A"
+            title = result.select_one("h1").text.strip() if result.select_one("h1") else "N/A"
             link = result.select_one("a")["href"] if result.select_one("a") else "N/A"
-            is_code_available = bool(result.select_one(".badge-primary"))
+            code = f"{link}#code" if link!="N/A" else "N/A"
+            summary = result.select_one(".item-strip-abstract").text.strip() if result.select_one(".item-strip-abstract") else "N/A" 
+            metadata = result.select_one(".author-name-text").text.strip() if result.select_one(".author-name-text") else "N/A"
 
             codes.append({
-                "title": title,
-                "link": f"https://paperswithcode.com{link}",
-                "code_available": is_code_available
+                "title": title if title!="N/A" else "N/A",
+                "link": f"https://paperswithcode.com{link}" if link!="N/A" else "N/A",
+                "code": f"https://paperswithcode.com{code}" if code!="N/A" else "N/A",
+                "summary" : f"{summary}" if summary!="N/A" else "N/A",
+                "metadata": f"{metadata}" if metadata!="N/A" else "N/A"
             })
 
         return {"codes": codes}
@@ -87,6 +86,32 @@ def fetch_code(query: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.get("/search")
+def merged_search(query: str):
+    """
+    Merge results from Google Scholar and Papers With Code.
+    """
+    try:
+        # Fetch papers from Google Scholar
+        search_results = search_papers(query=query).get("papers", [])
+
+        # Fetch codes from Papers With Code
+        code_results = fetch_code(query=query).get("codes", [])
+
+        # Format code results for consistency and append to search results
+        for code in code_results:
+            search_results.append({
+                "title": code.get("title", "N/A"),
+                "link": code.get("link", "N/A"),
+                "code": code.get("code", "N/A"),
+                "summary": code.get("summary", "N/A"),  # No summary available in code results
+                "metadata": code.get("metadata", "N/A"),  # No metadata available in code results
+            })
+
+        return {"merged_results": search_results}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/summarize")
 def summarize_text(text: str = Query(..., description="Text to summarize")):
@@ -96,36 +121,5 @@ def summarize_text(text: str = Query(..., description="Text to summarize")):
     try:
         summary = summarizer.invoke(f"summarize the following text in no more than 130 word: {text}")
         return {"summary": summary[0]["summary_text"]}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.get("/compare_papers")
-def compare_papers(query: str):
-    """
-    Fetch papers, check for code, and generate a comparative review.
-    """
-    try:
-        # Fetch papers from Google Scholar
-        papers = search_papers(query=query).get("papers", [])
-
-        # Fetch code availability from Papers With Code
-        codes = fetch_code(query=query).get("codes", [])
-
-        # Generate comparison
-        comparison = []
-        for paper in papers:
-            paper_code = next((code for code in codes if code["title"] in paper["title"]), None)
-            comparison.append({
-                "title": paper["title"],
-                "summary": paper["summary"],
-                "link": paper["link"],
-                "metadata": paper["metadata"],
-                "code_available": bool(paper_code),
-                "code_link": paper_code["link"] if paper_code else None
-            })
-
-        return {"comparison": comparison}
-
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
